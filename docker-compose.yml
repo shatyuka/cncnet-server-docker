@@ -1,0 +1,16 @@
+services:
+  cncnet-server:
+    build: .
+    container_name: cncnet-server
+    environment:
+      SERVER_NAME: "${SERVER_NAME:-My CnCNet tunnel}"
+      MAX_CLIENTS: ${MAX_CLIENTS:-200}
+      PORT1: ${PORT1:-50001}
+      PORT2: ${PORT2:-50000}
+    ports:
+      - "${PORT1:-50001}:${PORT1:-50001}/udp"
+      - "${PORT2:-50000}:${PORT2:-50000}/tcp"
+      - "${PORT2:-50000}:${PORT2:-50000}/udp"
+      - "3478:3478/udp"
+      - "8054:8054/udp"
+    restart: unless-stopped
