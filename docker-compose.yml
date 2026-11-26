@@ -7,6 +7,9 @@ services:
       MAX_CLIENTS: ${MAX_CLIENTS:-200}
       PORT1: ${PORT1:-50001}
       PORT2: ${PORT2:-50000}
+      SERVER_LOG_LEVEL: ${SERVER_LOG_LEVEL:-Warning}
+      SYSTEM_LOG_LEVEL: ${SYSTEM_LOG_LEVEL:-Warning}
+      EXTRA_ARGS: ${EXTRA_ARGS:-}
     ports:
       - "${PORT1:-50001}:${PORT1:-50001}/udp"
       - "${PORT2:-50000}:${PORT2:-50000}/tcp"

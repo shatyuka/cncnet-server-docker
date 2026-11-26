@@ -21,11 +21,20 @@ PORT1=50001
 
 # PORT2: Port for v2 tunnel
 PORT2=50000
+
+# SERVER_LOG_LEVEL: CnCNet server messages log level (Trace, Debug, Information, Warning, Error, Critical, None)
+SERVER_LOG_LEVEL=Warning
+
+# SYSTEM_LOG_LEVEL: Low level system messages log level
+SYSTEM_LOG_LEVEL=Warning
+
+# EXTRA_ARGS: Additional arguments passed to cncnet-server
+EXTRA_ARGS=""
 ```
 
 ## Usage
 
-- Start: `docker compose up -d`
+- Start: `docker compose up --build -d`
 - Stop: `docker compose down`
 - Logs: `docker compose logs -f -t`
 

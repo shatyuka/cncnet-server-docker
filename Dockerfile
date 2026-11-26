@@ -8,6 +8,9 @@ ARG VERSION=4.0.36
 RUN git clone --depth 1 -b v$VERSION https://github.com/Rans4ckeR/cncnet-server.git
 WORKDIR /src/cncnet-server
 
+# Console logger is DEBUG-only upstream; enable it so logs reach docker compose logs.
+RUN sed -i 's/^#if DEBUG$/#if true/' Infrastructure/Startup.cs
+
 ARG TARGETARCH
 RUN ARCH=${TARGETARCH} && [ "$ARCH" = "amd64" ] && ARCH="x64" ; \
     dotnet restore -r linux-musl-${ARCH} ; \
@@ -24,7 +27,10 @@ ENV SERVER_NAME="My CnCNet tunnel"
 ENV MAX_CLIENTS=200
 ENV PORT1=50001
 ENV PORT2=50000
+ENV SERVER_LOG_LEVEL=Warning
+ENV SYSTEM_LOG_LEVEL=Warning
+ENV EXTRA_ARGS=""
 
 EXPOSE 50000/tcp 50000/udp 50001/udp 3478/udp 8054/udp
 
-ENTRYPOINT ["/bin/sh", "-c", "exec ./cncnet-server --name \"$SERVER_NAME\" -2 -3 -m $MAX_CLIENTS -p $PORT1 -p2 $PORT2"]
+ENTRYPOINT ["/bin/sh", "-c", "exec ./cncnet-server --name \"$SERVER_NAME\" -2 -3 -m $MAX_CLIENTS -p $PORT1 -p2 $PORT2 --server-log-level \"$SERVER_LOG_LEVEL\" --system-log-level \"$SYSTEM_LOG_LEVEL\" $EXTRA_ARGS"]
